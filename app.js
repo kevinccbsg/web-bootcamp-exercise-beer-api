@@ -3,6 +3,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const api = require('./routes');
 const errorResponses = require('./lib/errorResponses');
 
 const debug = require('debug')('BEER:Api');
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
     </div>
   `);
 });
+app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
