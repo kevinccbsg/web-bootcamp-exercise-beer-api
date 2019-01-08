@@ -1,12 +1,13 @@
 const config = require('config');
 const debug = require('debug')('BEER:Auth');
+const { User } = require('../models');
 
 const authRoute = async (req, res, next) => {
   debug('Checking API KEY');
   const apiKey = req.headers['x-api-key'];
   if (!apiKey) return next(new Error('403:noAPIKEY'));
   try {
-    // const isValid = await User().auth(apiKey);
+    const isValid = await User().isAuth(apiKey);
     debug('API KEY validated');
     if (isValid) {
       return next();
