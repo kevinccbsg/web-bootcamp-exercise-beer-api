@@ -2,12 +2,14 @@ const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const errorResponses = require('./lib/errorResponses');
 
 const debug = require('debug')('BEER:Api');
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+app.use(helmet());
 app.use(cors());
 app.use(logger(':method :url :status :response-time ms - :res[content-length]'));
 app.use(bodyParser.json());
