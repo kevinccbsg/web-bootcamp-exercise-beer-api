@@ -8,7 +8,13 @@ const { Beer, User } = require('../models');
     debug('<---Deleting Beers DDBB--->');
     await Beer(config.get('ddbb')).deleteAll();
     await User(config.get('ddbb')).deleteAll();
+    await Beer(config.get('ddbb')).deleteAll('beer_default');
     debug('<---DDBB Deleted--->');
+
+    debug('<---DDBB CreateIndex--->');
+    await Beer(config.get('ddbb')).createIndex();
+    await User(config.get('ddbb')).createIndex();
+    debug('<---DDBB CreateIndex finished--->');
 
     const fakeBeerFormated = fakeBeer.map(obj => ({
       beerId: obj.id,
@@ -25,8 +31,8 @@ const { Beer, User } = require('../models');
     debug('<---Loading Beers--->');
     await Beer(config.get('ddbb')).saveBeers(fakeBeerFormated, 'beer_default');
     debug('<---Beers Loaded--->');
-    const userResponse = await User(config.get('ddbb')).register({ name: 'kevin', email: 'kevinccbsg@gmail.com' }, Beer);
-    debug(userResponse);
+    // const userResponse = await User(config.get('ddbb')).register({ name: 'kevin', email: 'kevinccbsg@gmail.com' }, Beer);
+    // debug(userResponse);
     debug('<---Digest data finished--->');
   } catch (e) {
     debug('<---Deleting DDBB--->');

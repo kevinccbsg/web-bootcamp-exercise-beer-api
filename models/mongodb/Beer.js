@@ -7,40 +7,56 @@ module.exports = (config) => {
   const { url, dbName } = config;
   const client = new MongoClient(url, { useNewUrlParser: true });
   return {
-    getBeers: async (search = '*', limit) => {
+    createIndex: async () => {
       try {
         await client.connect();
         const db = client.db(dbName);
         const col = db.collection('beers');
-        let query = {};
-        if (search) {
-          query = {
-            $or: [
-              {
-                name: new RegExp(`/${search}/`),
-              },
-              {
-                description: new RegExp(`/${search}/`),
-              },
-            ]
-          };
-        }
-        const cursor = await col.find(query, { _id: 0 });
-        if (limit) cursor.limit(Number(limit));
-        cursor.sort({ name: 1 });
-        return cursor.toArray();
+        await col.createIndex('beerId', { unique: false });
+        await col.createIndex('apiKey', { unique: false });
       } catch (e) {
         throw e;
       } finally {
         client.close();
       }
     },
-    getBeer: async (id) => {
+    getBeers: async (search, limit, apiKey) => {
       try {
         await client.connect();
         const db = client.db(dbName);
         const col = db.collection('beers');
-        const beer = await col.findOne({ beerId: id }, { _id: 0 });
+        let query = {
+          apiKey,
+        };
+        if (search) {
+          query = {
+            ...query,
+            $or: [
+              {
+                name: new RegExp(`${search}`, 'i'),
+              },
+              {
+                description: new RegExp(`${search}`, 'i'),
+              },
+            ]
+          };
+        }
+        const cursor = await col.find(query, { _id: 0 });
+        if (limit) cursor.limit(Number(limit));
+        const beers = await cursor.toArray()
+        return beers;
+      } catch (e) {
+        throw e;
+      } finally {
+        client.close();
+      }
+    },
+    getBeer: async (id, apiKey) => {
+      try {
+        await client.connect();
+        const db = client.db(dbName);
+        const col = db.collection('beers');
+        const beer = await col.findOne({ beerId: id, apiKey }, { _id: 0 });
         return beer;
       } catch (e) {
         throw e;
@@ -66,7 +82,7 @@ module.exports = (config) => {
         await client.connect();
         const db = client.db(dbName);
         const col = db.collection('beers');
-        await col.update({ beerId: id, apiKey }, { $inc: { likes: 1 } });
+        await col.updateOne({ beerId: id, apiKey }, { $inc: { likes: 1 } });
         const beer = await col.findOne({ beerId: id });
         return beer;
       } catch (e) {
@@ -99,11 +115,11 @@ module.exports = (config) => {
         client.close();
       }
     },
-    deleteAll: async () => {
+    deleteAll: async (collection = 'beers') => {
       try {
         await client.connect();
         const db = client.db(dbName);
-        const col = db.collection('beers');
+        const col = db.collection(collection);
         await col.deleteMany({});
         return;
       } catch (e) {

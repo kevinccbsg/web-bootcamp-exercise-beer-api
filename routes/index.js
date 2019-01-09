@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/v1/beers', authRoute, getBeers);
 router.get('/v1/beers/:id', authRoute, getBeer);
 router.post('/v1/beers/:id/comment', authRoute, addComment);
-router.post('/v1/beers/:id/like', authRoute, addComment);
+router.post('/v1/beers/:id/like', authRoute, addLike);
 router.post('/v1/user/login', login);
 router.post('/v1/user/register', register);
 

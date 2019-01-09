@@ -8,6 +8,18 @@ module.exports = (config) => {
   const { url, dbName } = config;
   const client = new MongoClient(url, { useNewUrlParser: true });
   return {
+    createIndex: async () => {
+      try {
+        await client.connect();
+        const db = client.db(dbName);
+        const col = db.collection('users');
+        await col.createIndex('email', { unique: true });
+      } catch (e) {
+        throw e;
+      } finally {
+        client.close();
+      }
+    },
     register: async (user, Beer) => {
       try {
         await client.connect();
@@ -15,7 +27,7 @@ module.exports = (config) => {
         const col = db.collection('users');
         const beer_col = db.collection('beer_default');
         const { uuid, apiKey } = uuidAPIKey.create();
-        const beers = await beer_col.find({}).toArray();
+        const beers = await beer_col.find({}, { _id: 0 }).toArray();
         const userEncripted = {
           ...user,
           uuid,
@@ -37,7 +49,6 @@ module.exports = (config) => {
         await client.connect();
         const db = client.db(dbName);
         const col = db.collection('users');
-        col.createIndex('email', { unique: true });
         const user = await col.findOne({ email });
         if (!user) throw '404';
         return { email: user.email, apiKey: user.apiKey };
@@ -53,7 +64,6 @@ module.exports = (config) => {
         await client.connect();
         const db = client.db(dbName);
         const col = db.collection('users');
-        col.createIndex('apiKey', { unique: true });
         const user = await col.findOne({ apiKey });
         if (!user) throw '403:noAPIKEYVerified';
         return true;

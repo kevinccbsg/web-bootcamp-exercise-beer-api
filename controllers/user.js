@@ -1,7 +1,7 @@
 const config = require('config');
 const debug = require('debug')('BEER:User');
 const validator = require('validator');
-const { User } = require('../models');
+const { User, Beer } = require('../models');
 
 module.exports.login = async (req, res, next) => {
   const { email } = req.body;
@@ -23,7 +23,7 @@ module.exports.register = async (req, res, next) => {
     if (!name || !email) throw '400';
     if (!validator.isEmail(email)) throw '400:email';
     const user = await User(config.get('ddbb'))
-      .register({ name, email });
+      .register({ name, email }, Beer);
     return res.status(201).json({ success: true, user });
   } catch (e) {
     debug(e);

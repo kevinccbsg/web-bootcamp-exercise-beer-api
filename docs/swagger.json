@@ -247,7 +247,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "202": {
             "description": "successful operation",
             "schema": {
               "type": "array",
@@ -309,7 +309,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "202": {
             "description": "successful operation",
             "schema": {
               "type": "array",
