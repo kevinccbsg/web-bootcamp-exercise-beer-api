@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "loadData": "DEBUG=BEER:* node ./DB/loadData.js",
-    "start": "DEBUG=BEER:* node app.js"
+    "start:dev": "NODE_ENV=development DEBUG=BEER:* node app.js",
+    "start": "NODE_ENV=production DEBUG=BEER:* node app.js"
   },
   "repository": {
     "type": "git",
