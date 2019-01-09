@@ -1,0 +1,489 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This documentation for Nodepop API",
+    "version": "1.0.0",
+    "title": "Beer API",
+    "contact": {
+      "email": "kevinccbsg@gmail.com"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "user",
+      "description": "Everything about users"
+    },
+    {
+      "name": "Beer",
+      "description": "Everything about anuncios"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/user/register": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Register a new user into the app",
+        "description": "Register a new user into the app",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Pet object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User registered",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserAccess"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "409": {
+            "description": "Already exists"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Register a new user into the app",
+        "description": "Register a new user into the app",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Pet object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserLogin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserAccess"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or bad email"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/beers": {
+      "get": {
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "Beer"
+        ],
+        "summary": "Get beers",
+        "description": "Get Beer API anuncios",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "description": "search filter",
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limit filter",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Beers"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameter"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/beers/{id}": {
+      "get": {
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "Beer"
+        ],
+        "summary": "get Beer detail",
+        "description": "Get Beer detail",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of beer to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SuccessBeer"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "forbiden. wrong API Key"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server Error"
+          }
+        }
+      }
+    },
+    "/beers/{id}/like": {
+      "post": {
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "Beer"
+        ],
+        "summary": "get Beer detail after give a like",
+        "description": "Get Beer detail after give a like",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of beer to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SuccessBeer"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "forbiden. wrong API Key"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server Error"
+          }
+        }
+      }
+    },
+    "/beers/{id}/comment": {
+      "post": {
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "tags": [
+          "Beer"
+        ],
+        "summary": "get Beer detail after adding comment",
+        "description": "Get Beer detail after adding comment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of beer to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Comment body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Comment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SuccessBeer"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "forbiden. wrong API Key"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server Error"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basicAuth": {
+      "type": "apiKey",
+      "name": "X-API-KEY",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Comment": {
+      "type": "object",
+      "properties": {
+        "comment": {
+          "type": "string"
+        }
+      }
+    },
+    "UserAccess": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "apiKey": {
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "UserLogin": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "SuccessBeer": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "Beer": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "image": {
+              "type": "string"
+            },
+            "ingredients": {
+              "type": "object"
+            },
+            "firstBrewed": {
+              "type": "string"
+            },
+            "brewersTips": {
+              "type": "string"
+            },
+            "contributedBy": {
+              "type": "string"
+            },
+            "likes": {
+              "type": "number"
+            },
+            "comments": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "comment": {
+                    "type": "string"
+                  },
+                  "dateComment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Beers": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "beers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "ingredients": {
+                "type": "object"
+              },
+              "firstBrewed": {
+                "type": "string"
+              },
+              "brewersTips": {
+                "type": "string"
+              },
+              "contributedBy": {
+                "type": "string"
+              },
+              "likes": {
+                "type": "number"
+              },
+              "comments": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "comment": {
+                      "type": "string"
+                    },
+                    "dateComment": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
