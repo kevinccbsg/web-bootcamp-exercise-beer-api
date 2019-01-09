@@ -48,11 +48,11 @@ module.exports = (config) => {
         client.close();
       }
     },
-    saveBeer: async (items) => {
+    saveBeers: async (items, collection = 'beers') => {
       try {
         await client.connect();
         const db = client.db(dbName);
-        const col = db.collection('beers');
+        const col = db.collection(collection);
         const { insertedIds } = await col.insertMany([].concat(items));
         return insertedIds;
       } catch (e) {
@@ -61,12 +61,12 @@ module.exports = (config) => {
         client.close();
       }
     },
-    addLike: async (id) => {
+    addLike: async (id, apiKey) => {
       try {
         await client.connect();
         const db = client.db(dbName);
         const col = db.collection('beers');
-        await col.update({ beerId: id }, { $inc: { likes: 1 } });
+        await col.update({ beerId: id, apiKey }, { $inc: { likes: 1 } });
         const beer = await col.findOne({ beerId: id });
         return beer;
       } catch (e) {
@@ -75,12 +75,22 @@ module.exports = (config) => {
         client.close();
       }
     },
-    addComment: async (id, comment) => {
+    addComment: async (id, apiKey, comment) => {
       try {
         await client.connect();
         const db = client.db(dbName);
         const col = db.collection('beers');
-        await col.update({ beerId: id }, { $set: { comment, commentDate: new Date() } });
+        await col.update({
+          beerId: id,
+          apiKey,
+        }, {
+          $push: {
+            comment: {
+              comment,
+              dateComment: new Date(),
+            },
+          },
+        });
         const beer = await col.findOne({ beerId: id });
         return beer;
       } catch (e) {

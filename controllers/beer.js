@@ -4,7 +4,9 @@ const validator = require('validator');
 const { Beer } = require('../models');
 
 module.exports.getBeers = async (req, res, next) => {
+  const apiKey = req.headers['x-api-key'];
   try {
+    if (!apiKey) throw '400';
     const beers = await Beer(config.get('ddbb'))
       .getBeers();
     return res.status(201).json({ success: true, beers });
@@ -15,8 +17,10 @@ module.exports.getBeers = async (req, res, next) => {
 };
 
 module.exports.getBeer = async (req, res, next) => {
+  const apiKey = req.headers['x-api-key'];
   const { id } = req.params;
   try {
+    if (!id || !apiKey) throw '400';
     const beer = await Beer(config.get('ddbb'))
       .getBeer(id);
     return res.status(201).json({ success: true, beer });
@@ -27,8 +31,10 @@ module.exports.getBeer = async (req, res, next) => {
 };
 
 module.exports.addLike = async (req, res, next) => {
+  const apiKey = req.headers['x-api-key'];
   const { id } = req.params;
   try {
+    if (!id || !apiKey) throw '400';
     const beer = await Beer(config.get('ddbb'))
       .addLike(id);
     return res.status(201).json({ success: true, beer });
@@ -39,12 +45,13 @@ module.exports.addLike = async (req, res, next) => {
 };
 
 module.exports.addComment = async (req, res, next) => {
+  const apiKey = req.headers['x-api-key'];
   const { id } = req.params;
   const { comment } = req.body;
   try {
-    if (!comment) throw '400';
+    if (!id || !comment || !apiKey) throw '400';
     const beer = await Beer(config.get('ddbb'))
-      .addLike(id, comment);
+      .addLike(id, apiKey, comment);
     return res.status(201).json({ success: true, beer });
   } catch (e) {
     debug(e);

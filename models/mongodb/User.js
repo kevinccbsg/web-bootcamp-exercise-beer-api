@@ -8,18 +8,22 @@ module.exports = (config) => {
   const { url, dbName } = config;
   const client = new MongoClient(url, { useNewUrlParser: true });
   return {
-    register: async (user) => {
+    register: async (user, Beer) => {
       try {
         await client.connect();
         const db = client.db(dbName);
         const col = db.collection('users');
+        const beer_col = db.collection('beer_default');
         const { uuid, apiKey } = uuidAPIKey.create();
+        const beers = await beer_col.find({}).toArray();
         const userEncripted = {
           ...user,
           uuid,
           apiKey,
         };
         await col.insertOne(userEncripted);
+        const userBeers = beers.map(beer => ({ ...beer, apiKey }));
+        await Beer(config).saveBeers(userBeers);
         return { email: user.email, apiKey };
       } catch (e) {
         if (e.message.includes('E11000')) throw 'E11000';

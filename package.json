@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "loadData": "DEBUG=BEER:* node ./DB/loadData.js",
     "start": "DEBUG=BEER:* node app.js"
   },
   "repository": {
