@@ -7,7 +7,7 @@ module.exports = (config) => {
   const { url, dbName } = config;
   const client = new MongoClient(url, { useNewUrlParser: true });
   return {
-    getBeers: async (search, limit) => {
+    getBeers: async (search = '*', limit) => {
       try {
         await client.connect();
         const db = client.db(dbName);

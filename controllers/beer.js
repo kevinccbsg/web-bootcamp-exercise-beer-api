@@ -5,10 +5,11 @@ const { Beer } = require('../models');
 
 module.exports.getBeers = async (req, res, next) => {
   const apiKey = req.headers['x-api-key'];
+  const { limit, search } = req.query;
   try {
     if (!apiKey) throw '400';
     const beers = await Beer(config.get('ddbb'))
-      .getBeers();
+      .getBeers(search, limit);
     return res.status(201).json({ success: true, beers });
   } catch (e) {
     debug(e);
