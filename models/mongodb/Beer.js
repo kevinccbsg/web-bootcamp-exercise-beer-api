@@ -27,7 +27,7 @@ module.exports = (config) => {
         }
         const cursor = await col.find(query, { _id: 0 });
         if (limit) cursor.limit(Number(limit));
-        if (sort) cursor.sort({ name: 1 });
+        cursor.sort({ name: 1 });
         return cursor.toArray();
       } catch (e) {
         throw e;

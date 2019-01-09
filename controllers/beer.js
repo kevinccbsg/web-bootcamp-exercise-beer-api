@@ -42,6 +42,7 @@ module.exports.addComment = async (req, res, next) => {
   const { id } = req.params;
   const { comment } = req.body;
   try {
+    if (!comment) throw '400';
     const beer = await Beer(config.get('ddbb'))
       .addLike(id, comment);
     return res.status(201).json({ success: true, beer });

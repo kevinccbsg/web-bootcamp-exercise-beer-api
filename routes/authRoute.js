@@ -7,7 +7,8 @@ const authRoute = async (req, res, next) => {
   const apiKey = req.headers['x-api-key'];
   if (!apiKey) return next(new Error('403:noAPIKEY'));
   try {
-    const isValid = await User().isAuth(apiKey);
+    const isValid = await User(config.get('ddbb'))
+      .isAuth(apiKey);
     debug('API KEY validated');
     if (isValid) {
       return next();

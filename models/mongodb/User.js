@@ -35,9 +35,10 @@ module.exports = (config) => {
         const col = db.collection('users');
         col.createIndex('email', { unique: true });
         const user = await col.findOne({ email });
-        return { email: user.email, apiKey };
+        if (!user) throw '404';
+        return { email: user.email, apiKey: user.apiKey };
       } catch (e) {
-        if (e.message.includes('E11000')) throw 'E11000';
+        if (e.message && e.message.includes('E11000')) throw 'E11000';
         throw e;
       } finally {
         client.close();
