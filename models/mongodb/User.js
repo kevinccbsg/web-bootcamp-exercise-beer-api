@@ -32,6 +32,7 @@ module.exports = (config) => {
           ...user,
           uuid,
           apiKey,
+          role: 'user',
         };
         await col.insertOne(userEncripted);
         const userBeers = beers.map(beer => ({ ...beer, apiKey }));
@@ -66,7 +67,7 @@ module.exports = (config) => {
         const col = db.collection('users');
         const user = await col.findOne({ apiKey });
         if (!user) throw '403:noAPIKEYVerified';
-        return true;
+        return user;
       } catch (e) {
         throw e;
       } finally {

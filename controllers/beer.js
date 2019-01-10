@@ -10,7 +10,7 @@ module.exports.getBeers = async (req, res, next) => {
     if (!apiKey) throw '400';
     const beers = await Beer(config.get('ddbb'))
       .getBeers(search, limit, apiKey);
-    return res.status(201).json({ success: true, beers });
+    return res.status(200).json({ success: true, beers });
   } catch (e) {
     debug(e);
     return next(new Error(e));

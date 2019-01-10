@@ -8,7 +8,7 @@
       "email": "kevinccbsg@gmail.com"
     }
   },
-  "host": "web-bootcamp-exercise-beer-api-jwiwaafyqs.now.sh",
+  "host": "localhost:3000",
   "basePath": "/api/v1",
   "tags": [
     {
@@ -27,6 +27,11 @@
   "paths": {
     "/user/register": {
       "post": {
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
         "tags": [
           "user"
         ],
@@ -67,6 +72,9 @@
           },
           "500": {
             "description": "Internal server error"
+          },
+          "403": {
+            "description": "Unauthorized"
           }
         }
       }
