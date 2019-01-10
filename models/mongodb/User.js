@@ -27,7 +27,7 @@ module.exports = (config) => {
         const col = db.collection('users');
         const beer_col = db.collection('beer_default');
         const { uuid, apiKey } = uuidAPIKey.create();
-        const beers = await beer_col.find({}, { _id: 0 }).toArray();
+        const beers = await beer_col.find({}, { fields:{ _id: 0 } }).toArray();
         const userEncripted = {
           ...user,
           uuid,
