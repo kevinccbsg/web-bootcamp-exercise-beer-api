@@ -1,14 +1,14 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "This documentation for Nodepop API",
+    "description": "This documentation for Beer API",
     "version": "1.0.0",
     "title": "Beer API",
     "contact": {
       "email": "kevinccbsg@gmail.com"
     }
   },
-  "host": "localhost:3000",
+  "host": "web-bootcamp-exercise-beer-api-jwiwaafyqs.now.sh",
   "basePath": "/api/v1",
   "tags": [
     {
@@ -21,8 +21,8 @@
     }
   ],
   "schemes": [
-    "http",
-    "https"
+    "https",
+    "http"
   ],
   "paths": {
     "/user/register": {
