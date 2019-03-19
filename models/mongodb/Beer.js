@@ -51,6 +51,23 @@ module.exports = (config) => {
         client.close();
       }
     },
+    deleteBeerLike: async (id, apiKey) => {
+      try {
+        await client.connect();
+        const db = client.db(dbName);
+        const col = db.collection('beers');
+        let query = {
+          apiKey,
+          beerId: id,
+        };
+        const beer = await col.update(query, { $set: { likes: 0 } }, { _id: 0 });
+        return beer;
+      } catch (e) {
+        throw e;
+      } finally {
+        client.close();
+      }
+    },
     getBeer: async (id, apiKey) => {
       try {
         await client.connect();

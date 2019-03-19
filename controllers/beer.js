@@ -60,3 +60,16 @@ module.exports.addComment = async (req, res, next) => {
   }
 };
 
+module.exports.deleteBeerLike = async (req, res, next) => {
+  const apiKey = req.headers['x-api-key'];
+  const { id } = req.params;
+  try {
+    if (!id || !apiKey || isNaN(Number(id))) throw '400';
+    const beer = await Beer(config.get('ddbb'))
+      .deleteBeerLike(Number(id), apiKey);
+    return res.status(202).json({ success: true, beer });
+  } catch (e) {
+    debug(e);
+    return next(new Error(e));
+  }
+};
