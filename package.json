@@ -4,10 +4,11 @@
   "description": "An API for keepcoding bootcamp to retrieve beers!",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "loadData": "DEBUG=BEER:* node ./DB/loadData.js",
-    "start:dev": "NODE_ENV=development DEBUG=BEER:* node app.js",
-    "start": "NODE_ENV=production DEBUG=BEER:* node app.js"
+    "test": "NODE_ENV=test jest --detectOpenHandles",
+    "loadData": "NODE_ENV=development DEBUG=BEER:* node ./DB/loadData.js",
+    "start:dev": "NODE_ENV=development DEBUG=BEER:* node ./bin/www",
+    "docker": "bash -c '(docker network inspect local 2>&1 > /dev/null || docker network create local) && docker-compose --file docker/docker-compose.yml up -d --force-recreate'",
+    "start": "NODE_ENV=production DEBUG=BEER:* node ./bin/www"
   },
   "repository": {
     "type": "git",
@@ -30,12 +31,19 @@
     "cors": "^2.8.5",
     "debug": "^4.1.1",
     "express": "^4.16.4",
-    "helmet": "^3.15.0",
-    "mongodb": "^3.1.10",
+    "helmet": "^3.21.2",
+    "mongodb": "^3.4.1",
     "morgan": "^1.9.1",
     "require-all": "^3.0.0",
     "swagger-ui-express": "^4.0.2",
     "uuid-apikey": "^1.4.2",
     "validator": "^10.10.0"
+  },
+  "jest": {
+    "testMatch": ["**/test/**/*.[jt]s?(x)"]
+  },
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "supertest": "^4.0.2"
   }
 }

@@ -67,14 +67,14 @@
           "400": {
             "description": "Bad request"
           },
+          "403": {
+            "description": "Unauthorized"
+          },
           "409": {
             "description": "Already exists"
           },
           "500": {
             "description": "Internal server error"
-          },
-          "403": {
-            "description": "Unauthorized"
           }
         }
       }
@@ -158,10 +158,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Beers"
-              }
+              "$ref": "#/definitions/Beers"
             }
           },
           "400": {
@@ -205,10 +202,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/SuccessBeer"
-              }
+              "$ref": "#/definitions/SuccessBeer"
             }
           },
           "400": {
@@ -258,10 +252,7 @@
           "202": {
             "description": "successful operation",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/SuccessBeer"
-              }
+              "$ref": "#/definitions/SuccessBeer"
             }
           },
           "400": {
@@ -320,10 +311,7 @@
           "202": {
             "description": "successful operation",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/SuccessBeer"
-              }
+              "$ref": "#/definitions/SuccessBeer"
             }
           },
           "400": {
@@ -394,7 +382,7 @@
         "success": {
           "type": "boolean"
         },
-        "Beer": {
+        "beer": {
           "type": "object",
           "properties": {
             "name": {

@@ -4,6 +4,7 @@ const { User } = require('../models');
 
 const authRoute = roles => async (req, res, next) => {
   debug('Checking API KEY');
+  if (process.env.NODE_ENV === 'test') return next();
   const apiKey = req.headers['x-api-key'];
   if (!apiKey) return next(new Error('403:noAPIKEY'));
   try {

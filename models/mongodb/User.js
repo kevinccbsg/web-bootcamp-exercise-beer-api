@@ -6,7 +6,7 @@ module.exports = (config) => {
     throw Error('No required MongoDb parameters provided');
   }
   const { url, dbName } = config;
-  const client = new MongoClient(url, { useNewUrlParser: true });
+  const client = new MongoClient(url, { useUnifiedTopology: true });
   return {
     createIndex: async () => {
       try {

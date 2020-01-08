@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  mongo:
+    build: ./mongo
+    container_name: beerapi-api-mongo
+    image: beerapi-api:mongo
+    environment:
+      - MONGO_DB_APP_PASSWORD=node
+      - MONGO_DB_APP_USERNAME=node
+      - MONGO_DB_APP_DATABASE=beerapi
+    ports:
+      - '27017:27017'
+    healthcheck:
+      test: ['CMD', 'echo', 'show dbs', '|', 'mongo']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    command: mongod --smallfiles

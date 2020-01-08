@@ -68,4 +68,4 @@ app.use((err, req, res, next) => { // eslint-disable-line
   });
 });
 
-app.listen(PORT, () => debug(`Listening on PORT: ${PORT}`))
+module.exports = app;
