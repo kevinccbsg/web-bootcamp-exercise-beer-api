@@ -100,7 +100,7 @@ module.exports = (config) => {
         const db = client.db(dbName);
         const col = db.collection('beers');
         await col.updateOne({ beerId: id, apiKey }, { $inc: { likes: 1 } });
-        const beer = await col.findOne({ beerId: id });
+        const beer = await col.findOne({ beerId: id, apiKey });
         return beer;
       } catch (e) {
         throw e;
@@ -124,7 +124,7 @@ module.exports = (config) => {
             },
           },
         });
-        const beer = await col.findOne({ beerId: id });
+        const beer = await col.findOne({ beerId: id, apiKey });
         return beer;
       } catch (e) {
         throw e;
