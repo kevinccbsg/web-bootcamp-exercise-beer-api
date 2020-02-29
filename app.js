@@ -12,9 +12,19 @@ const debug = require('debug')('BEER:Api');
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+const isProd = process.env.NODE_ENV === 'production';
+
+let logRoute = isProd ? join('/', 'var', 'log', 'node-app.log') : join(__dirname, 'node-app.log');
+
+const accessLogStream = fs.createWriteStream(logRoute, {
+  flags: 'a',
+});
+
 app.use(helmet());
 app.use(cors());
-app.use(logger(':method :url :status :response-time ms - :res[content-length]'));
+app.use(logger(':method :url :status :response-time ms - :res[content-length]', {
+  stream: accessLogStream,
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

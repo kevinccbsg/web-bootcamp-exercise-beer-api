@@ -31,8 +31,8 @@ const load = async () => {
     debug('<---Loading Beers--->');
     await Beer(config.get('ddbb')).saveBeers(fakeBeerFormated, 'beer_default');
     debug('<---Beers Loaded--->');
-    // const userResponse = await User(config.get('ddbb')).register({ name: 'kevin', email: 'kevinccbsg@gmail.com' }, Beer);
-    // debug(userResponse);
+    const userResponse = await User(config.get('ddbb')).register({ name: 'kevin', email: 'kevinccbsg@gmail.com' }, Beer);
+    debug(userResponse);
     debug('<---Digest data finished--->');
   } catch (e) {
     debug('<---Deleting DDBB--->');

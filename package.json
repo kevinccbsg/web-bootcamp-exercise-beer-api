@@ -8,7 +8,7 @@
     "loadData": "NODE_ENV=development DEBUG=BEER:* node ./DB/loadData.js",
     "start:dev": "NODE_ENV=development DEBUG=BEER:* node ./bin/www",
     "docker": "bash -c '(docker network inspect local 2>&1 > /dev/null || docker network create local) && docker-compose --file docker/docker-compose.yml up -d --force-recreate'",
-    "start": "NODE_ENV=production DEBUG=BEER:* node ./bin/www"
+    "start": "NODE_ENV=production node ./bin/www"
   },
   "repository": {
     "type": "git",
