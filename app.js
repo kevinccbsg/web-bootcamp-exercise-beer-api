@@ -1,9 +1,10 @@
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
+const config = require('config');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
-const swaggerUi = require('swagger-ui-express');
+const expressJSDocSwagger = require('express-jsdoc-swagger');
 const swaggerDocument = require('./docs/swagger.json');
 const api = require('./routes');
 const errorResponses = require('./lib/errorResponses');
@@ -49,7 +50,8 @@ app.get('/', (req, res) => {
   `);
 });
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+expressJSDocSwagger(app)(config.get('routes.swagger'));
+
 app.use('/api', api);
 
 // catch 404 and forward to error handler

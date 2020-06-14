@@ -31,16 +31,18 @@
     "cors": "^2.8.5",
     "debug": "^4.1.1",
     "express": "^4.16.4",
+    "express-jsdoc-swagger": "^1.0.1",
     "helmet": "^3.21.2",
     "mongodb": "^3.4.1",
     "morgan": "^1.9.1",
     "require-all": "^3.0.0",
-    "swagger-ui-express": "^4.0.2",
     "uuid-apikey": "^1.4.2",
     "validator": "^10.10.0"
   },
   "jest": {
-    "testMatch": ["**/test/**/*.[jt]s?(x)"]
+    "testMatch": [
+      "**/test/**/*.[jt]s?(x)"
+    ]
   },
   "devDependencies": {
     "jest": "^24.9.0",
