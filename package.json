@@ -37,7 +37,7 @@
     "morgan": "^1.9.1",
     "require-all": "^3.0.0",
     "uuid-apikey": "^1.4.2",
-    "validator": "^10.10.0"
+    "validator": "^13.7.0"
   },
   "jest": {
     "testMatch": [
